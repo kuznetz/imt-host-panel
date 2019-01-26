@@ -1,0 +1,8 @@
+{
+  "paths": {
+    "users": "/etc/imthost/users.json",
+    "sites": "/etc/imthost/sites",
+    "nginx": "/etc/nginx/conf.d",
+    "php": "/etc/php/7.0/fpm/pool.d"
+  }
+}

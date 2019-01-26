@@ -1,0 +1,31 @@
+#!/usr/bin/python3
+import cherrypy
+import cherrypy_cors
+from pprint import pprint
+
+import sys
+sys.path
+sys.path.append('backend')
+
+from common import *
+from ApiAuth import ApiAuth
+from ApiMain import ApiMain
+
+if __name__ == '__main__':
+    loadConfig("./config.json")
+    loadUsers(appconfig["paths"]["users"])
+
+    cherrypy_cors.install()
+    cherrypy.config.update({
+      'server.socket_host': '0.0.0.0',
+      'server.socket_port': 8081,
+      'tools.encode.encoding': "utf-8",
+      #'tools.json_in.on': True,
+      #'/':{'cors.expose.on': True}
+    })
+    
+    cherrypy.tree.mount(ApiAuth(), '/api/auth' , {})    
+    cherrypy.tree.mount(ApiMain(), '/api/main')
+    cherrypy.engine.signals.subscribe()
+    cherrypy.engine.start()
+    cherrypy.engine.block()
